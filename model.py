@@ -2,6 +2,7 @@ import os.path
 
 # import sqlite3
 # import numpy as np
+from tkinter import filedialog
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join('db', 'evaluation.bin')
@@ -14,8 +15,19 @@ class Model:
 
     @staticmethod
     def verify_import(self, filename):
-        return print(os.path.isfile(filename))
+        return print(filename, os.path.isfile(filename))
     # TODO : verify if filename exits, before start db connect import os.path os.path.isfile(filename)
+
+    @staticmethod
+    def verify_extension(self, filename, extension):
+        print("."+filename.split('.')[-1], extension, "."+filename.split('.')[-1] == extension)
+        return "." + filename.split('.')[-1] == extension
+
+    @staticmethod
+    def get_file_path(root):
+        root.filename = filedialog.askopenfilename(initialdir="C:/Users/patricia/Downloads", title="Choose a file",
+                                                   filetypes=(("bin files", "*.bin"), ("all files", "*.*")))
+        return root.filename
 
     # Open connection
     # conn = sqlite3.connect(my_file)

@@ -2,30 +2,40 @@ from functools import partial
 from tkinter import *
 from tkinter import filedialog
 from shutil import copyfile
+from container import Container
 
 
 class View:
-    def __init__(self, root, model):
-        my_menu = Menu(root)
-        root.config(menu=my_menu)
+    def __init__(self, root, model, controller):
+        menu = Container.create_menu(root, 0)
 
-        # create a menu item
-        file_menu = Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="Open File", command=partial(self.openFile, root))
-        # file_menu.add_command(label="Import Files", command=partial(self.importFile, root))
+        file = Container.create_menu(menu, 0)
+        menu.add_cascade(label="File", menu=file)
+        # file.add_command(label="Open File", command=partial(self.openFile, root))
+        file.add_command(label="Open File", command=controller.openFile)
 
-        edit_menu = Menu(my_menu, tearoff=0)
-        my_menu.add_cascade(label="Edit", menu=edit_menu)
+        edit_menu = Menu(menu, tearoff=0)
+        menu.add_cascade(label="Edit", menu=edit_menu)
         edit_menu.add_command(label="Plot Data", command=self.cmdo)
         edit_menu.add_command(label="Show Data", command=self.cmdo)
 
-        my_menu.add_command(label="Exit", command=root.destroy)
+        menu.add_command(label="Quit", command=root.destroy)
+        root.config(menu=menu)
 
-        self.myLabel1 = Label(root, text="Hello w!").pack()  # .grid(row = 1 ,column = 1)
-        self.myLabel2 = Label(root, text="Bey!").pack()  # .grid(row=2, column=1)
+        self.wel = Container.create_label(root, "Welcome to toolkit!", "Calibri", "10").pack()
+        self.bey = Container.create_label(root, "Bey!", "Calibri", "10").pack()
 
-        self.btn = Button(root, text="Open file", command=partial(self.openFile, root)).pack()
+        self.path = Container.create_label(root, text="Loading...", font="Calibri", size="10")
+        self.path["state"]="disabled"
+        self.path.pack_forget()
+
+        # self.btn = Container.create_button(root, "Click me!", "Calibri", "10" ).pack()
+        # file_menu.add_command(label="Import Files", command=partial(self.importFile, root))
+
+        # self.myLabel1 = Label(root, text="Welcome to toolkit!").pack()  # .grid(row = 1 ,column = 1)
+        # self.myLabel2 = Label(root, text="Bey!").pack()  # .grid(row=2, column=1)
+
+        # self.btn = Button(root, text="Open file", command=partial(self.openFile, root)).pack()
 
         self.closeButton(root)
         if model.verify_import(self, 'db/x.bin'):
