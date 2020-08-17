@@ -1,8 +1,9 @@
 import os.path
-
 # import sqlite3
 # import numpy as np
 from tkinter import filedialog
+import glob
+from typing import List, Any, Union
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join('db', 'evaluation.bin')
@@ -11,16 +12,21 @@ my_file = os.path.join('db', 'evaluation.bin')
 class Model:
     def __init__(self):
         self.name = 'Model'
+        self.db_files: List[Union[Union[bytes, str], Any]] = glob.glob("db/*.bin")
+        self.import_db_file = ""
         print(my_file)
+        for item in self.db_files:
+            print("-->" + item)
 
     @staticmethod
     def verify_import(self, filename):
         return print(filename, os.path.isfile(filename))
+
     # TODO : verify if filename exits, before start db connect import os.path os.path.isfile(filename)
 
     @staticmethod
     def verify_extension(self, filename, extension):
-        print("."+filename.split('.')[-1], extension, "."+filename.split('.')[-1] == extension)
+        print("." + filename.split('.')[-1], extension, "." + filename.split('.')[-1] == extension)
         return "." + filename.split('.')[-1] == extension
 
     @staticmethod
@@ -29,6 +35,12 @@ class Model:
                                                    filetypes=(("bin files", "*.bin"), ("all files", "*.*")))
         return root.filename
 
+    @staticmethod
+    def split_path_name(filename, char_split, index):
+        return filename.split(char_split)[index]
+
+    def update_imported_file(self, filename):
+        self.import_db_file = filename
     # Open connection
     # conn = sqlite3.connect(my_file)
     # cursor = conn.cursor()

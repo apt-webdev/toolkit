@@ -9,10 +9,12 @@ class View:
     def __init__(self, root, model, controller):
         menu = Container.create_menu(root, 0)
 
-        file = Container.create_menu(menu, 0)
-        menu.add_cascade(label="File", menu=file)
+        self.file = Container.create_menu(menu, 0)
+        menu.add_cascade(label="File", menu=self.file)
         # file.add_command(label="Open File", command=partial(self.openFile, root))
-        file.add_command(label="Open File", command=controller.openFile)
+        self.file.add_command(label="Open File", command=controller.openfile)
+        self.file.add_command(label="Import User File", command=partial(controller.selectdb, root))
+        self.file.add_command(label="Import Baseline File", command=partial(self.openFile, root))
 
         edit_menu = Menu(menu, tearoff=0)
         menu.add_cascade(label="Edit", menu=edit_menu)
@@ -22,14 +24,27 @@ class View:
         menu.add_command(label="Quit", command=root.destroy)
         root.config(menu=menu)
 
-        self.wel = Container.create_label(root, "Welcome to toolkit!", "Calibri", "10").pack()
-        self.bey = Container.create_label(root, "Bey!", "Calibri", "10").pack()
+        self.wel = Container.create_label(root, "Welcome to toolkit!", "Calibri", "10")
+        self.bey = Container.create_label(root, "Bey!", "Calibri", "10")
 
         self.path = Container.create_label(root, text="Loading...", font="Calibri", size="10")
-        self.path["state"]="disabled"
-        self.path.pack_forget()
+        self.path["state"] = "disabled"
+        self.path = Container.container_pack_forget(self.path)
 
-        # self.btn = Container.create_button(root, "Click me!", "Calibri", "10" ).pack()
+
+
+        # radio selection
+        # v = StringVar(root, "1")
+        #values = {"RadioButton 1": "1",
+        #          "RadioButton 2": "2",
+        #          "RadioButton 3": "3",
+        #          "RadioButton 4": "4",
+        #          "RadioButton 5": "5"}
+        #for (text, value) in values.items():
+        #    Radiobutton(root, text=text, variable=v,value=value).pack()
+
+
+            # self.btn = Container.create_button(root, "Click me!", "Calibri", "10" ).pack()
         # file_menu.add_command(label="Import Files", command=partial(self.importFile, root))
 
         # self.myLabel1 = Label(root, text="Welcome to toolkit!").pack()  # .grid(row = 1 ,column = 1)
