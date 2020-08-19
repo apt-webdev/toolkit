@@ -1,4 +1,3 @@
-from functools import partial
 from tkinter import *
 
 
@@ -30,12 +29,11 @@ class Container:
         return Radiobutton(root, text=text, variable=var, value=value)
 
     @staticmethod
-    def var_radiobutton(type, setvalue):
-
-        if type == "str":
+    def var_radiobutton(typevar, setvalue):
+        if typevar == "str":
             var = StringVar()
             var.set(setvalue)
-        if type == "int":
+        if typevar == "int":
             var = IntVar()
             var.set(setvalue)
 

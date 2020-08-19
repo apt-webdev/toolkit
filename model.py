@@ -4,9 +4,11 @@ import os.path
 from tkinter import filedialog
 import glob
 from typing import List, Any, Union
+from dbconnect import DBConnect
 
-THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-my_file = os.path.join('db', 'evaluation.bin')
+
+# THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+# my_file = os.path.join('db', 'evaluation.bin')
 
 
 class Model:
@@ -14,7 +16,7 @@ class Model:
         self.name = 'Model'
         self.db_files: List[Union[Union[bytes, str], Any]] = glob.glob("db/*.bin")
         self.import_db_file = ""
-        print(my_file)
+        # print(my_file)
         for item in self.db_files:
             print("-->" + item)
 
@@ -41,6 +43,23 @@ class Model:
 
     def update_imported_file(self, filename):
         self.import_db_file = filename
+        self.create_dbconnect()
+
+    def create_dbconnect(self):
+        try:
+            conn, cursor = DBConnect.open_connection("db\\" + self.import_db_file)
+            print("SUCCESS: open database file")
+
+        except Exception as e:
+            print("ERROR:", e)
+
+        else:
+            # TODO create db table
+            graph = DBConnect.create_pathgraph(cursor)
+            DBConnect.load_data(graph)
+
+            # DBConnect.close_connection(conn, cursor)
+
     # Open connection
     # conn = sqlite3.connect(my_file)
     # cursor = conn.cursor()
@@ -69,6 +88,5 @@ class Model:
     # cursor.close()
     # conn.close()
 
-
-if __name__ == "__main__":
-    Model()
+# if __name__ == "__main__":
+#   Model()

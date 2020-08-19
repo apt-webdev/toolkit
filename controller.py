@@ -1,5 +1,3 @@
-from _ast import Lambda
-
 from model import Model
 from view import View
 import tkinter as tk
@@ -16,7 +14,7 @@ class Controller:
     def __init__(self):
         self.root = tk.Tk()
         self.model = Model()
-
+        self.var_set = StringVar()
         self.view = View(self.root, self.model, self)
 
     def run(self):
@@ -39,8 +37,9 @@ class Controller:
         print(files)
         lab = Container.create_label(root, "Choose a db file to import:", "Calibri", "10")
         Container.container_pack(lab, None)
+        Container.container_pack_forget(self.view.wel)
         # self.var_set = Container.var_radiobutton("srt", files[0])
-        self.var_set = StringVar()
+        # self.var_set = StringVar()
         self.var_set.set(self.model.split_path_name(files[0], "\\", 1))
         print(files[0], self.var_set.get())
         set_radio = []
@@ -64,6 +63,7 @@ class Controller:
             Container.container_pack_forget(lab)
             Container.container_pack_forget(item)
             Container.container_pack_forget(selected)
+
         print(self.model.import_db_file)
 
 # TODO: Event handlers

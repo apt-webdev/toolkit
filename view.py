@@ -25,26 +25,24 @@ class View:
         root.config(menu=menu)
 
         self.wel = Container.create_label(root, "Welcome to toolkit!", "Calibri", "10")
+        self.wel.pack()
         self.bey = Container.create_label(root, "Bey!", "Calibri", "10")
-
+        self.bey.pack_forget()
         self.path = Container.create_label(root, text="Loading...", font="Calibri", size="10")
         self.path["state"] = "disabled"
         self.path = Container.container_pack_forget(self.path)
 
-
-
         # radio selection
         # v = StringVar(root, "1")
-        #values = {"RadioButton 1": "1",
+        # values = {"RadioButton 1": "1",
         #          "RadioButton 2": "2",
         #          "RadioButton 3": "3",
         #          "RadioButton 4": "4",
         #          "RadioButton 5": "5"}
-        #for (text, value) in values.items():
+        # for (text, value) in values.items():
         #    Radiobutton(root, text=text, variable=v,value=value).pack()
 
-
-            # self.btn = Container.create_button(root, "Click me!", "Calibri", "10" ).pack()
+        # self.btn = Container.create_button(root, "Click me!", "Calibri", "10" ).pack()
         # file_menu.add_command(label="Import Files", command=partial(self.importFile, root))
 
         # self.myLabel1 = Label(root, text="Welcome to toolkit!").pack()  # .grid(row = 1 ,column = 1)
@@ -52,7 +50,7 @@ class View:
 
         # self.btn = Button(root, text="Open file", command=partial(self.openFile, root)).pack()
 
-        self.closeButton(root)
+        # self.close_Button(root)
         if model.verify_import(self, 'db/x.bin'):
             Label(root, text="File path verified!").pack()
 
@@ -73,5 +71,5 @@ class View:
     #     Label(root, text="Files imported!").pack()
 
     @staticmethod
-    def closeButton(root):
+    def close_button(root):
         Button(root, text="Quit", command=root.destroy).pack()
