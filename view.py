@@ -25,8 +25,9 @@ class View:
         root.config(menu=menu)
 
         self.wel = Container.create_label(root, "Welcome to toolkit!", "Calibri", "10")
+        self.wel.pack()
         self.bey = Container.create_label(root, "Bey!", "Calibri", "10")
-
+        self.bey.pack_forget()
         self.path = Container.create_label(root, text="Loading...", font="Calibri", size="10")
         self.path["state"] = "disabled"
         self.path = Container.container_pack_forget(self.path)

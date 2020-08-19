@@ -55,7 +55,8 @@ class Model:
 
         else:
             # TODO create db table
-            DBConnect.load_data(cursor)
+            graph = DBConnect.create_pathgraph(cursor)
+            DBConnect.load_data(graph)
 
             # DBConnect.close_connection(conn, cursor)
 

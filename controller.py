@@ -37,6 +37,7 @@ class Controller:
         print(files)
         lab = Container.create_label(root, "Choose a db file to import:", "Calibri", "10")
         Container.container_pack(lab, None)
+        Container.container_pack_forget(self.view.wel)
         # self.var_set = Container.var_radiobutton("srt", files[0])
         # self.var_set = StringVar()
         self.var_set.set(self.model.split_path_name(files[0], "\\", 1))

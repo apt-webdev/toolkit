@@ -1,7 +1,7 @@
-# import node_task
+from path_graph import PathGraph
 
 
-class PathTask:
+class PathTask(PathGraph):
     def __init__(self, id_num, name, count, diff_time, init_time, final_time, path):
         self.id_num = id_num
         self.name = name
@@ -13,6 +13,16 @@ class PathTask:
 
     def time_diff(self):
         print(int(self.final_time) - int(self.init_time))
+
+    def __str__(self):
+        res = "result: "
+        res += (str(self.id_num) + " ")
+        res += (str(self.name) + " ")
+        res += (str(self.count) + " ")
+        res += (str(self.diff_time) + " ")
+        res += (self.path.__str__())
+
+        return res
 
 # listPath = []
 # listPath.append(PathTask("Tara home", "home, drawer, settings", "23", "30"))
