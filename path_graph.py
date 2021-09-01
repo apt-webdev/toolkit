@@ -49,7 +49,7 @@ class PathGraph:
         return res
 
     def find_isolated_vertices(self):
-        """ returns a list of isolated vertices. """
+
         graph = self.path_graph
         isolated = []
         for vertex in graph:

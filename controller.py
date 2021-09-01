@@ -1,10 +1,11 @@
-from model import Model
-from view import View
+import os
 import tkinter as tk
 from tkinter import *
-import os
-from shutil import copyfile
+from tkinter import messagebox
+from model import Model
+from view import View
 from container import Container
+from shutil import copyfile
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 icon = os.path.join('icon', 'tool.png')
@@ -12,58 +13,74 @@ icon = os.path.join('icon', 'tool.png')
 
 class Controller:
     def __init__(self):
-        self.root = tk.Tk()
+        self.root = tk.Tk()  # create board
         self.model = Model()
         self.var_set = StringVar()
         self.view = View(self.root, self.model, self)
 
+
     def run(self):
-        self.root.geometry('400x400')
-        self.root.title("toolkit")
-        self.root.tk.call('wm', 'iconphoto', self.root.w, tk.PhotoImage(file=icon))
+        self.root.geometry('500x500')
+        self.root.title(" toolkit")
+        # self.root.tk.call('wm', 'iconphoto', self.root.w, tk.PhotoImage(file=icon))
         self.root.deiconify()
         self.root.mainloop()
 
-    def openfile(self):
-        filename = self.model.get_file_path(self.root)
-        if self.model.verify_extension(self, filename, ".bin"):
-            self.view.path["text"] = filename
-            self.view.path.pack(side=BOTTOM)
-            copyfile(filename, "db/" + filename.split('/')[-1])
-            print(filename)
+    # Import dirname = file or baseline
+    def open_file(self, dir_name):
+        file_name = self.model.get_file(self.root) # open standard file - raw_data
+        if file_name != '':
+            if dir_name == 'db_users':  # for users files .bin
+                extension = '.bin'
+            else:  # for baseline .txt
+                extension = '.txt'
+            if self.model.verify_extension(self, file_name, extension) and file_name!='':
+                copyfile(file_name, dir_name + "/" + file_name.split('/')[-1])
+                print(dir_name, file_name)
+                self.clear_status(1)
+            else:
+                self.message_box("error", "Error extension file.")
 
-    def selectdb(self, root):
-        files = self.model.db_files
-        print(files)
-        lab = Container.create_label(root, "Choose a db file to import:", "Calibri", "10")
-        Container.container_pack(lab, None)
-        Container.container_pack_forget(self.view.wel)
-        # self.var_set = Container.var_radiobutton("srt", files[0])
-        # self.var_set = StringVar()
-        self.var_set.set(self.model.split_path_name(files[0], "\\", 1))
-        print(files[0], self.var_set.get())
-        set_radio = []
-        for item in files:
-            item = self.model.split_path_name(item, "\\", 1)
-            radio_butt = Container.create_radiobutton(root, item, self.var_set, item)
-            set_radio.append(radio_butt)
-            Container.container_pack(radio_butt, None)
-        self.submit_radiobutton(root, set_radio, lab)
+    def clear_status(self, flag):
+        if flag == 1: self.view.btn3["state"] = "active"
+        else: self.view.btn3["state"] = "disabled"
 
-    def submit_radiobutton(self, root, set_radio, lab):
-        selected = Container.create_button(root, "Submit", None, None)
-        Container.container_pack(selected, None)
-        selected["command"] = lambda: self.submit_radio_file(root, set_radio, lab, selected)
+    # Process raw data
+    def process_raw(self, root):
+        files, baselines = self.model.get_folders() # get lists with the files
+        print("Files:", files)
+        print("Baseline:", baselines)
 
-    def submit_radio_file(self, root, set_radio, lab, selected):
-        self.model.update_imported_file(self.var_set.get())
-        label = Container.create_label(root, self.model.import_db_file, "calibri", "10")
-        Container.container_pack(label, None)
-        for item in set_radio:
-            Container.container_pack_forget(lab)
-            Container.container_pack_forget(item)
-            Container.container_pack_forget(selected)
+        if len(files)==0:
+            self.message_box("warning", "No file found in:\n" + THIS_FOLDER +" \db_users")
+        elif len(baselines)==0:
+            self.message_box("warning", "No file found in:\n" + THIS_FOLDER + "\\baseline")
+        else:
+            # Take off welcome label
+            # Container.ctn_grid_forget(self.view.wel)
+            # Container.ctn_grid(self.view.btn4, 10, 0 , 10, 60)
+            self.clear_status(0)
+            #lb_array = []
+            row = 5  #lina do system grid onde posso começar a escrever
+            for item in files: # mostra os files a ser processados
+                lb_item = Container.create_label(root, item, "Calibri", "10")
+                Container.ctn_grid(lb_item, row, 0, 10, 0)
+                row = row + 2
+                #.append(lb_item)
+            self.model.get_baseline_id()
+            self.model.get_tables()
 
-        print(self.model.import_db_file)
+    @staticmethod
+    def message_box(type, message):
+        if type == "error":
+            messagebox.showerror("Error Message", message)
+        if type == "warning":
+            messagebox.showwarning("Warning Message", message)
+        if type == "info":
+            messagebox.showinfo("Information", message)
+        else:
+            pass
+
+
 
 # TODO: Event handlers

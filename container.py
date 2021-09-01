@@ -18,10 +18,10 @@ class Container:
         return label
 
     @staticmethod
-    def create_button(root, text, font, width):
+    def create_button(root, text,font):
         btn = Button(root, text=text)
         btn["font"] = font
-        btn["width"] = width
+        #btn["width"] = width
         return btn
 
     @staticmethod
@@ -37,10 +37,21 @@ class Container:
             var = IntVar()
             var.set(setvalue)
 
-    @staticmethod
-    def container_pack(container, side):
-        container.pack(side=side)
 
     @staticmethod
-    def container_pack_forget(container):
-        container.pack_forget()
+    def ctn_grid(container, row, column, padx, pady):
+        container.grid(row = row, column= column, padx=padx, pady= pady)
+
+    @staticmethod
+    def ctn_grid_forget(container):
+        container.grid_forget()
+
+    #@staticmethod
+    #def container_pack(container, side):
+    #    container.pack(side=side)
+
+    #@staticmethod
+    #def container_pack_forget(container):
+    #    container.pack_forget()
+
+
