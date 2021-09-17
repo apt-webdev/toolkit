@@ -16,7 +16,7 @@ class Pie_Plot_Base():
         # plotting legend
         ax1.legend()
         fig1.savefig("figures/" + "cir_classi" + ".pdf", format="pdf")
-        plt.show()
+        #plt.show()
 
 
 if __name__ == '__main__':

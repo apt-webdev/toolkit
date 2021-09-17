@@ -66,7 +66,7 @@ class BarPlotCount:
         fig.tight_layout()
         plot_name = 'baseline_median_count'
         fig.savefig("figures/" + plot_name + ".pdf", format="pdf")
-        plt.show()
+        # plt.show()
 
 if __name__ == '__main__':
     BarPlotCount.create_bar_plot(baseline_count=None , median_users=None)

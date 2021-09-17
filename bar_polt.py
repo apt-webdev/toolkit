@@ -66,7 +66,7 @@ class BarPlot:
         fig.tight_layout()
         plot_name = 'baseline_median_tasks'
         fig.savefig("figures/" + plot_name + ".pdf", format="pdf")
-        plt.show()
+        #plt.show()
 
 if __name__ == '__main__':
     BarPlot.create_bar_plot(baseline_time=None , median_users=None)

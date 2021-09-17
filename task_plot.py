@@ -54,7 +54,7 @@ class TaskPlot():
         plt.legend()
         fig.savefig("figures/" + fig_name + ".pdf", format="pdf")
 
-        plt.show()
+        #plt.show()
 
 '''if __name__ == '__main__':
     # function to show the plot

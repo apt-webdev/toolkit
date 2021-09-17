@@ -352,7 +352,7 @@ class Model:
         taxas_users = [0, 0, 0, 0]
         sum = 0
         for task in info_for_task[0]:
-            #TaskPlot.create_plot(index_task, self.baseline_name, self.baseline_time, task[0], task[1], task[2], task[3])
+            TaskPlot.create_plot(index_task, self.baseline_name, self.baseline_time, task[0], task[1], task[2], task[3])
             index_user = 0
             for x in taxas_users:
                 if len(task[index_user])!=0:
@@ -369,13 +369,13 @@ class Model:
         median = self.get_bar_plot(info_for_task[0])
         self.baseline_time = [int(x) for x in self.baseline_time]
         self.baseline_count = [int(x) for x in self.baseline_count]
-        #BarPlot.create_bar_plot(self.baseline_time, median)
-        #BarPlotCount.create_bar_plot(self.baseline_count, median_count)
+        BarPlot.create_bar_plot(self.baseline_time, median)
+        BarPlotCount.create_bar_plot(self.baseline_count, median_count)
 
-        #Pie_Plot_Noise.create_plot(total_tasks[1], total_tasks[2])
-        #Pie_Plot_Base.create_plot(total_tasks[2], total_tasks[3])
+        Pie_Plot_Noise.create_plot(total_tasks[1], total_tasks[2])
+        Pie_Plot_Base.create_plot(total_tasks[2], total_tasks[3])
 
-        #self.print_table(total_tasks, total_u1, total_u2, total_3, total_4)
+        self.print_table(total_tasks, total_u1, total_u2, total_3, total_4)
 
         original_stdout: TextIO = sys.stdout
         with open('./results/data-status.txt', 'w') as f:

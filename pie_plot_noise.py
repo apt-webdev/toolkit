@@ -18,7 +18,7 @@ class Pie_Plot_Noise():
         # plotting legend
         ax1.legend()
         fig1.savefig("figures/" + "cir_noise" + ".pdf", format="pdf")
-        plt.show()
+        #plt.show()
 
 
 if __name__ == '__main__':
