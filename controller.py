@@ -11,6 +11,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 icon = os.path.join('icon', 'tool.png')
 
 
+
 class Controller:
     def __init__(self):
         self.root = tk.Tk()  # create board
